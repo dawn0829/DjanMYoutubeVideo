@@ -1,0 +1,17 @@
+/* dashboard */
+:root {
+    --offcanvas-width: 270px;
+    --topNavbarHeight: 56px;
+}
+.sidebar-nav {
+    width: var(--offcanvas-width) !important;
+}
+
+@media (min-width: 992px) {
+    .sidebar-nav {
+        transform: none !important;
+        visibility: visible ;
+        top:var(--topNavbarHeight) !important;
+        height: calc(100% - var(--topNavbarHeight));
+    }
+}

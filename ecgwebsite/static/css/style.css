@@ -1,0 +1,80 @@
+/*start*/
+html,
+body{
+    height:100%;
+    margin: 0;
+    max-width: 100%;
+}
+/* navbar */
+#btn-nav{
+    width: 85px;
+    height: 25px;
+    float: right;
+    margin-right: 25px;
+    margin-top: 2px;
+    
+}
+
+/*footer*/
+.wrapper{
+    min-height:100%;
+    margin-bottom:-50px;;
+}
+#footer,
+.push{
+    height: 50px;
+    font-size: 13px;
+}
+
+/* patient */
+
+.side-label{
+    width: 80px;
+}
+
+/* login */
+#btn-enter {
+    width: 90px;
+}
+#heart {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+}
+
+/* custom sweetalert */
+.swal-text {
+    text-align: center;
+}
+
+/* icon setting */
+.swal-icon--success::before,
+.swal-icon--success::after,
+.swal-icon--success__hide-corners {
+    background: none !important;
+}
+.swal-icon--success {
+    background: #007bff !important;
+}
+.swal-icon--success__hide-line {
+    background: #007bff;
+}
+
+.sawl-button {
+    padding: 7px 19px;
+    border-radius: 5px;
+    background-color: #007bff;
+    font-size: 12px;
+    border: 1px solid #007bff;
+}
+.sawl-button:focus {
+    box-shadow: none;
+}
+.sawl-button:not([disabled]):hover {
+    background: transparent;
+    color: #111;
+    border: 1px solid #007bff;
+}

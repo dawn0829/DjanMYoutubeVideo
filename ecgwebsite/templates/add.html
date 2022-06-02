@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{% block title %}
+    Add  Patient
+{% endblock  %}
+
+{% block nav-btn %}
+    <a href="/logout" class="btn btn-outline-info border-light btn-sm" id="btn-nav">Logout</a>
+{% endblock nav-btn %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-body border-dark text-primary mt-5">
+                <span class="text-center">{% block card-title %}組員資料表{% endblock card-title %}</span>
+            </div>
+            <form {% block Action %}action="/addpatient"{% endblock Action %} method="POST" enctype="multipart/form-data" class="card p-3 border-dark mt-3">
+                {%csrf_token%}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text side-label">姓名</span>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Patient name" maxlength="40" required {% block Value-name %}{% endblock Value-name %}>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text side-label">電話</span>
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Patient phone" required {% block Value-phone %}{% endblock Value-phone %}>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text side-label">信箱</span>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Patient email" maxlength="40" required {% block Value-email %}{% endblock Value-email %}>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text side-label">年紀</span>
+                    <input type="text" class="form-control" name="age" id="age" maxlength="3" placeholder="Patient age" required {% block Value-age %}{% endblock Value-age %}>
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text side-label">性別</label>
+                    <select class="form-control" name="gender" required {% block Value-gender %}{% endblock Value-gender %}>
+                        {% block option %}
+                        <option value="" hidden>Select the gender</option>
+                        {% endblock option %}
+                        <option disabled></option>
+                        <option>M</option>
+                        <option>F</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" name="note" rows="7" maxlength="700" placeholder="Description is optional..." {% block Value-note %}{% endblock Value-note %}></textarea>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    
+                    <button type="submit" id="btn-add" class="btn btn-primary btn-sm">
+                    {% block Btn-content %} <i class="fas fa-plus"></i>&nbsp;&nbsp;Add {% endblock Btn-content %}                  
+                    </button>
+                    
+                    {% block Btn-reset %}{% endblock Btn-reset %}
+                    <a href="{% url 'backend' %}" class="btn btn-dark btn-sm">&nbsp;&nbsp; Back</a>
+                    {% block Id-hidden %}{% endblock Id-hidden %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% for message in messages %}
+{% if message.tag == 'error' %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    var m = "{{ message }}";
+    swal("Denied !", m, "error")
+</script>
+{% endif %}
+{% endfor %}
+{% endblock %}

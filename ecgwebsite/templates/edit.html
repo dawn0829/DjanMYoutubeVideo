@@ -1,0 +1,34 @@
+{% extends 'add.html' %}
+<!-- title -->
+{% block title %} Patient {% endblock title %}
+<!-- Nabar  -->
+{% block navbar-content %}
+<i class="fas fa-user-edit"></i>&nbsp;&nbsp;{{ patient.name }}
+{% endblock navbar-content %}
+
+<!-- title in card -->
+{% block card-title %} 註冊時間: <span class="text-primary"><strong>{{ patient.create_at | date:'m/d/Y (H:i)' }}</strong></span>{% endblock card-title %}
+
+<!-- extends add button -->
+{% block Btn-content %}<i class="fas fa-hdd"></i>&nbsp;&nbsp; Save  {% endblock Btn-content %}
+
+<!-- reset button -->
+{% block Btn-reset %}
+<button type="reset" class="btn btn-secondary btn-sm"><i class="fas fa-sync-alt"></i>&nbsp;&nbsp; Reset</button>
+{% endblock Btn-reset %}
+
+<!-- form action -->
+{% block Action %} action="/edit_patient"{% endblock Action %}
+
+{% block Value-name %}value="{{ patient.name }}"{% endblock Value-name %}
+{% block Value-phone %}value="{{ patient.phone }}"{% endblock Value-phone %}
+{% block Value-email %}value="{{ patient.email }}"{% endblock Value-email %}
+{% block Value-age %}value="{{ patient.age }}"{% endblock Value-age %}
+
+{% block option %} <option style="background-color: #d3d3d3; color: #007bff; font-weight: bold;">{{ patient.gender }}</option> {% endblock option %}
+{% block Value-gender %} value="{{ patient.gender }}"{% endblock Value-gender %}
+
+{% block Value-note %}{{ patient.note }}{% endblock Value-note %}
+
+<!-- Input id hidden here -->
+{% block Id-hidden %} <input type="hidden" name="id" value="{{ patient.id }}"> {% endblock Id-hidden %}

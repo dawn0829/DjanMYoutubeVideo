@@ -1,0 +1,113 @@
+{%extends 'base.html'%}
+{% block title %}
+    Detect    
+{% endblock  %}
+{% block navbar-content %}
+<i class="fas fa-stethoscope"></i>&nbsp;&nbsp;Detect
+{% endblock navbar-content %}
+{% block nav-btn %}
+<a href="/logout" class="btn btn-outline-danger border-light text-light btn-sm" id="btn-nav">Logout</a>
+{% endblock nav-btn %}
+{%block content%}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<!-- ajax -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<body>
+    <div id="ECGcontainer"></div>
+</body>
+<script>
+    var ECGdata = 0;
+    var ECGArray = [];
+    const getData = async () => {
+            const response = await axios.get('http://10.10.10.59:1234/test')
+            ECGdata = response.data?.val
+            return ECGdata
+            }
+    
+    // Create the chart
+    Highcharts.stockChart('ECGcontainer', {
+        chart: {
+            events: {
+                load: function () {
+
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    var test=setInterval(function () {
+                        getData()
+                        var x = (new Date()).getTime(), // current time
+                            y = ECGdata;
+                            ECGArray.push(y)
+                            if(ECGArray.length>100)clearInterval(test);
+                            console.log(y)
+                        series.addPoint([x, y], true, true);
+                    }, 30);
+                }
+            }
+        },
+
+        time: {
+            useUTC: false
+        },
+
+        rangeSelector: {
+            buttons: [{
+                count: 1,
+                type: 'minute',
+                text: '1M'
+            }, {
+                count: 5,
+                type: 'minute',
+                text: '5M'
+            }, {
+                type: 'all',
+                text: 'All'
+            }],
+            inputEnabled: false,
+            selected: 0
+        },
+
+        title: {
+            text: 'Real-Time ECG data'
+        },
+
+        exporting: {
+            enabled: false
+        },
+
+        series: [{
+            name: 'ECG data',
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -999; i <= 0; i += 1) {
+                    data.push([
+                        0
+                    ]);
+                }
+                return data;
+            }())
+        }]
+    });
+  
+        $(document).ready(function(){
+            $('button').on('click', function() {
+            var tasks = ECGArray;
+            $.ajax({
+                type: 'POST',
+                url: '/backend/',
+                data: {'tasks[]': tasks},
+            });
+        });
+        });
+            
+</script>
+
+<a href="/add" class="btn btn-outline-primary boder-light text-light btn-sm" id="btn-nav">Add Patient</a>
+
+{% endblock %}
